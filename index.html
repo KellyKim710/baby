@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>우리 아이가 생겼어요. 잘 키워볼게요.</title>
+<style>
+  :root {
+    --bg: #fff7f0;
+    --bg2: #ffe9dc;
+    --text: #4a3b35;
+    --muted: #8a756b;
+    --accent: #ff8a6b;
+    --accent-press: #f2704e;
+    --on-accent: #ffffff;
+    --toast-bg: #4a3b35;
+    --toast-text: #fff7f0;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1f1a18;
+      --bg2: #2c2320;
+      --text: #f6ebe4;
+      --muted: #b8a39a;
+      --accent: #ff9a7e;
+      --accent-press: #ff8061;
+      --on-accent: #2a1a14;
+      --toast-bg: #f6ebe4;
+      --toast-text: #1f1a18;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1f1a18;
+    --bg2: #2c2320;
+    --text: #f6ebe4;
+    --muted: #b8a39a;
+    --accent: #ff9a7e;
+    --accent-press: #ff8061;
+    --on-accent: #2a1a14;
+    --toast-bg: #f6ebe4;
+    --toast-text: #1f1a18;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { height: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    height: 100%;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    gap: 16px;
+  }
+  .emoji {
+    font-size: clamp(64px, 20vw, 96px);
+    line-height: 1;
+    animation: float 3s ease-in-out infinite;
+  }
+  h1 {
+    margin: 8px 0 0;
+    font-size: clamp(26px, 7vw, 38px);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    word-break: keep-all;
+    max-width: 14em;
+  }
+  p {
+    margin: 0;
+    font-size: clamp(15px, 4vw, 18px);
+    color: var(--muted);
+    line-height: 1.6;
+    word-break: keep-all;
+    max-width: 22em;
+  }
+  button {
+    margin-top: 20px;
+    min-width: 200px;
+    padding: 16px 36px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255, 138, 107, 0.35);
+    transition: transform 0.1s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:hover { background: var(--accent-press); }
+  button:active { transform: scale(0.97); }
+  button:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 20px);
+    background: var(--toast-bg);
+    color: var(--toast-text);
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .emoji { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="emoji" aria-hidden="true">🍼</div>
+    <h1>우리 아이가 생겼어요.<br>잘 키워볼게요.😊</h1>
+    <p>작은 생명과 함께 시작하는 첫 하루,<br>엄마도, 아빠도 천천히 배우며 함께 자라요.</p>
+    <button id="startBtn" type="button">시작</button>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite">준비 중입니다</div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('startBtn');
+      var toast = document.getElementById('toast');
+      var timer = null;
+      btn.addEventListener('click', function () {
+        toast.classList.add('show');
+        clearTimeout(timer);
+        timer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+      });
+    })();
+  </script>
+</body>
+</html>
